@@ -1,0 +1,88 @@
+
+*{
+    margin:0.22em;
+    padding:0px;
+    box-sizing: border-box;
+    font-family: 'Trebuchet MS',  Arial, sans-serif;
+}
+
+.top-bar{
+    background-color: #b5b3db2d;
+    display: flex;
+    align-items: center;
+}
+.logo{
+    font-size:3rem;
+    padding:1rem;
+    flex-grow: 1;
+}
+.menu{
+    
+    flex-grow:3;
+}
+
+.menu ul{
+    list-style:none;
+    display:flex;
+   
+}
+
+.menu ul li{
+    flex-grow: 1;
+}
+
+.menu ul li a{
+    font-size:1.2rem;
+    color:blue;
+    text-decoration : none;
+}
+.button{
+    background-color: #27A80D;
+    color: white;
+    margin: 1rem;
+    flex-grow: 1;
+    cursor: pointer;
+}
+.button1:hover{
+    background-color: #0C9CC0; 
+    color: black; 
+    border: 2px solid #008CBA;
+}
+.button2{
+    background-color: #204BBC;
+    color: black;
+    border-radius: 0.2rem;
+}
+.parabutton{
+    display: flex;
+}
+.paragraf{
+    font-size: 2rem;
+    margin: 1rem;
+    flex-grow: 4;
+}
+.filter{
+    float: right;
+}
+h2{
+    text-align: center;
+}
+.kayit{
+    align-items: center;
+    background-color: rgb(94, 115, 212);
+    margin: 15%;
+    padding: 3%;
+}
+.list-group-item{   
+    text-align: center;
+}
+.list-group-item:list-group-item-action{
+    
+    text-align: center;
+}
+.tarihGecmis{
+color: rgb(255, 0, 0);
+}
+.tarihGecmemis{
+color: rgb(41, 179, 41);
+}

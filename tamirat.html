@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel = "icon" href = "electricBike.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arıza Kaydı</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="commonScript.js"></script>
+</head>
+<body>
+
+    <br><br><br><br>
+    <div class="kayit" style="text-align: center;">
+            
+        <h1>Tamir işlemleri</h1>
+        <br>
+        <input type=”number” id="bikeAriza" size="40" placeholder="Arızası" >
+        <br>
+        <input type=”number” id="bikeIslem" size="40" placeholder="Yapılan işlem" >
+        <br>
+        <button id="Kaydet">Kaydet</button>
+    </div>
+
+    <script type="text/javascript" src="commonScript.js"></script>
+    <script type="module">
+         
+            
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+        
+        const firebaseConfig = {
+apiKey: "AIzaSyA3ibi6tOyzcwjawYcYy4sdA2KkIbXTQA8",
+authDomain: "gtubike-6edfa.firebaseapp.com",
+projectId: "gtubike-6edfa",
+storageBucket: "gtubike-6edfa.appspot.com",
+messagingSenderId: "352784650234",
+appId: "1:352784650234:web:b555a06bfa180ba3349e43",
+measurementId: "G-J1M7ZPQ03L"
+};
+        
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+                
+        import{
+            getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField, getDocs,onSnapshot
+        }
+        from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        const db=getFirestore();
+
+        
+    var radioHurda=document.getElementById("bikeAriza");
+    var radioKira=document.getElementById("bikeIslem");
+
+    async function Update(){
+        
+        var ref = doc(db, "bisikletler",sessionStorage.getItem('tamirBikeNo'));
+            await updateDoc(
+                ref, {
+                    Arizasi : radioHurda.value,
+                    Not: radioKira.value
+                }
+            )
+            .then(()=>{
+                alert("Bisiklet Güncellendi");
+            })
+            .catch((error)=>{
+                alert("Hata! Bisiklet güncellenemedi." + error);
+            })
+    }
+        document.getElementById("Kaydet").addEventListener('click',Update);
+
+      </script>
+</body>
+</html>

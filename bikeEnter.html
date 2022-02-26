@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel = "icon" href = "electricBike.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeni Bisiklet Kaydı</title>
+    <link rel="stylesheet" href="style.css"rel="stylesheet" type="text/css" />
+    <script src="commonScript.js"></script>
+</head>
+<body>
+
+    <script src="commonScript.js"></script>
+    <br><br><br><br>
+    <div class="kayit" style="text-align: center;">
+            
+        <input onkeypress="return onlyNumberKey(event)" type=”number” id="bikeNum" size="40" placeholder="Bisiklet numarası" >
+        <br>
+        <input onkeypress="return onlyNumberKey(event)" type=”number” id="kilitNo" size="40" placeholder="Kilit numarası" >
+        <br>
+        <select id="kira" >
+            <option value="Kirada">Kirada</option>
+            <option value="Kiralanmadı">Kiralanmadı</option>
+        </select>
+        <br>
+        
+        <select id="hurda">
+            <option value="Hurda">Hurda</option>
+            <option value="Saglam">Saglam</option>
+        </select>
+        <br>
+        <button id="Kaydet">Kaydet</button>
+    </div>
+
+    <script type="text/javascript" src="commonScript.js"></script>
+    <script type="module">
+        
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+        
+        const firebaseConfig = {
+    apiKey: "AIzaSyA3ibi6tOyzcwjawYcYy4sdA2KkIbXTQA8",
+    authDomain: "gtubike-6edfa.firebaseapp.com",
+    projectId: "gtubike-6edfa",
+    storageBucket: "gtubike-6edfa.appspot.com",
+    messagingSenderId: "352784650234",
+    appId: "1:352784650234:web:b555a06bfa180ba3349e43",
+    measurementId: "G-J1M7ZPQ03L"
+  };
+        
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+                
+        import{
+            getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField
+        }
+        from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        const db=getFirestore();
+        var kilit=document.getElementById("kilitNo");
+        var bikeNum=document.getElementById("bikeNum");
+        var radioHurda=document.getElementById("hurda");
+        var radioKira=document.getElementById("kira");
+        var date=new Date();
+        
+        var kaydet=document.getElementById("Kaydet");
+        var arizaVarmi;
+        var ariza;
+        var not;
+        
+        async function InsertData(){
+            var d=new Date();
+            var ref = doc(db, "bisikletler",bikeNum.value);
+            var a=d.getDate()+"."+(d.getMonth()+1)+"."+d.getFullYear();
+            var b="-";
+            if(radioKira.value=="Kirada")
+                b=getFullTarih();
+            if(radioHurda.value=="Hurda"){
+                sessionStorage.setItem("tamirBikeNo",bikeNum.value);
+                window.open("tamirat.html");
+                arizaVarmi="var";
+            }
+            else{
+                arizaVarmi="yok";
+                ariza="-";
+                not="-"
+            }
+
+            await setDoc(
+                    ref, {
+                        Sahibi:"-",
+                        Plaka : bikeNum.value,
+                        Hurda : radioHurda.value,
+                        ArizaVarmi:arizaVarmi,
+                        Kira : radioKira.value,
+                        KayitTarih:a,
+                        teslimTarihi:b,
+                        kilitNo:kilit.value
+                    }
+                )
+                .then(()=>{
+                    alert("Kiralanan bisiklet veritabanına başarıyla eklendi.\nTeslim tarihi:"+b);
+                })
+                .catch((error)=>{
+                    alert("Hata! Bisiklet Veritabanına Eklenemedi." + error);
+                })
+        }
+        kaydet.addEventListener('click',InsertData);
+
+
+      </script>
+
+</body>
+</html>

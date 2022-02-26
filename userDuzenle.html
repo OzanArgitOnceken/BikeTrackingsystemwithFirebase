@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel = "icon" href = "electricBike.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Notu</title>
+</head>
+<body>
+    <div style="margin-left: 0%;margin-top: 20%;text-align: center; height: 600px;" >
+        <h2>Kullanıcı Notu</h2>  
+        <input type="text" id="yapilanislem" style="width:400px; height:15px;margin-top: -100;padding-left: 0 ; "TextMode="MultiLine"   placeholder="Kullanıcı Notu">
+        <br>
+        <br>
+        <button id="Kaydet" style="padding-top: 30;" >Kaydet</button>
+    </div>
+    <script type="module">
+    
+         
+            
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+            
+            const firebaseConfig = {
+    apiKey: "AIzaSyA3ibi6tOyzcwjawYcYy4sdA2KkIbXTQA8",
+    authDomain: "gtubike-6edfa.firebaseapp.com",
+    projectId: "gtubike-6edfa",
+    storageBucket: "gtubike-6edfa.appspot.com",
+    messagingSenderId: "352784650234",
+    appId: "1:352784650234:web:b555a06bfa180ba3349e43",
+    measurementId: "G-J1M7ZPQ03L"
+  };
+            
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+                    
+            import{
+                getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField, getDocs,onSnapshot
+            }
+            from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    
+            const db=getFirestore(); 
+        var userNot=document.getElementById("yapilanislem");
+        async function Update(){
+            
+            var ref = doc(db, "kullanicilar",sessionStorage.getItem('DuzenlenecekUser'));
+                await updateDoc(
+                    ref, {
+                        not:userNot.value,
+                    }
+                )
+                .then(()=>{
+                    alert("Kullanıcı güncellendi");
+                })
+                .catch((error)=>{
+                    alert("Hata! Kullanıcı güncellenemedi." + error);
+                })
+        }
+            document.getElementById("Kaydet").addEventListener('click',Update);
+    
+    </script>
+    
+</body>
+</html>
